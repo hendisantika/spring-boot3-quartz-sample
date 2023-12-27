@@ -1,7 +1,6 @@
 package com.hendisantika.quartzsample.exception;
 
-
-import org.hibernate.service.spi.ServiceException;
+import com.hendisantika.quartzsample.exception.base.ServiceException;
 
 /**
  * Created by IntelliJ IDEA.

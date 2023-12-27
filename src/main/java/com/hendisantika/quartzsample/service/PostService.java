@@ -1,6 +1,7 @@
 package com.hendisantika.quartzsample.service;
 
 import com.hendisantika.quartzsample.entity.Post;
+import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import com.hendisantika.quartzsample.repository.AuthorRepository;
 import com.hendisantika.quartzsample.repository.PostRepository;
 import com.hendisantika.quartzsample.repository.TagRepository;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -44,5 +46,14 @@ public class PostService {
             postList = postRepository.findByTitleContaining(title);
         }
         return postList;
+    }
+
+    public Post getById(Long id) {
+        return postRepository
+                .findById(id)
+                .orElseThrow(
+                        () ->
+                                new DataNotFoundException(
+                                        MessageFormat.format("Post id {0} not found", String.valueOf(id))));
     }
 }

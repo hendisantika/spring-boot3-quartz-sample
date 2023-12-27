@@ -1,6 +1,7 @@
 package com.hendisantika.quartzsample.service;
 
 import com.hendisantika.quartzsample.entity.Tag;
+import com.hendisantika.quartzsample.exception.BadRequestException;
 import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import com.hendisantika.quartzsample.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,15 @@ public class TagService {
             return tagRepository.save(tagUpdate);
         } else {
             return tagRepository.save(tagRequest);
+        }
+    }
+
+    public void deleteById(Long id) {
+        Optional<Tag> tag = tagRepository.findById(id);
+        if (tag.isPresent()) {
+            tagRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Delete error, please check ID and try again");
         }
     }
 }

@@ -1,8 +1,11 @@
 package com.hendisantika.quartzsample.service;
 
+import com.hendisantika.quartzsample.entity.Tag;
 import com.hendisantika.quartzsample.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,4 +22,9 @@ import org.springframework.stereotype.Service;
 public class TagService {
 
     private final TagRepository tagRepository;
+
+    public List<Tag> getAllTags() {
+        List<Tag> tagList = tagRepository.findAll();
+        return tagList;
+    }
 }

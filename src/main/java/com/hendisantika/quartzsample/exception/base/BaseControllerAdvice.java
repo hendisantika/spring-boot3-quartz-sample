@@ -1,5 +1,6 @@
 package com.hendisantika.quartzsample.exception.base;
 
+import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.ErrorResponse;
@@ -34,5 +35,13 @@ public class BaseControllerAdvice {
                 String.valueOf(HttpStatus.NOT_FOUND.value()),
                 "No resource found for your request. Please verify you request",
                 TIMESTAMP);
+    }
+
+    @ExceptionHandler({DataNotFoundException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse dataNotFoundException(Exception ex) {
+        log.debug(ex.getMessage(), ex.getCause());
+        return new ErrorResponse(
+                String.valueOf(HttpStatus.NOT_FOUND.value()), ex.getMessage(), TIMESTAMP);
     }
 }

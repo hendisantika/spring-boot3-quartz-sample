@@ -1,10 +1,12 @@
 package com.hendisantika.quartzsample.service;
 
 import com.hendisantika.quartzsample.entity.Tag;
+import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import com.hendisantika.quartzsample.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -26,5 +28,14 @@ public class TagService {
     public List<Tag> getAllTags() {
         List<Tag> tagList = tagRepository.findAll();
         return tagList;
+    }
+
+    public Tag getById(Long id) {
+        return tagRepository
+                .findById(id)
+                .orElseThrow(
+                        () ->
+                                new DataNotFoundException(
+                                        MessageFormat.format("Tag id {0} not found", String.valueOf(id))));
     }
 }

@@ -1,12 +1,16 @@
 package com.hendisantika.quartzsample.service;
 
+import com.hendisantika.quartzsample.entity.Post;
 import com.hendisantika.quartzsample.repository.AuthorRepository;
 import com.hendisantika.quartzsample.repository.PostRepository;
 import com.hendisantika.quartzsample.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,4 +34,15 @@ public class PostService {
     private final AuthorRepository authorRepository;
 
     private final TagRepository tagRepository;
+
+    @Cacheable(value = "posts")
+    public List<Post> getAllPosts(String title) {
+        List<Post> postList;
+        if (title == null) {
+            postList = postRepository.findAll();
+        } else {
+            postList = postRepository.findByTitleContaining(title);
+        }
+        return postList;
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNullApi;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -49,6 +50,15 @@ public class Job extends QuartzJobBean {
         mailService.send(jobDTO.getFrom(), jobDTO.getTo(), jobDTO.getSubject(), jobDTO.getBody());
         if (false) {
             this.unScheduleJob(context);
+        }
+    }
+
+    private void unScheduleJob(JobExecutionContext context) {
+        try {
+            log.info("Job unscheduled {}", context.getTrigger().getKey());
+            context.getScheduler().unscheduleJob(context.getTrigger().getKey());
+        } catch (SchedulerException e) {
+            log.error("Error while unscheduled job", e);
         }
     }
 }

@@ -1,0 +1,28 @@
+package com.hendisantika.quartzsample.exception;
+
+import org.hibernate.service.spi.ServiceException;
+
+/**
+ * Created by IntelliJ IDEA.
+ * Project : spring-boot3-quartz-sample
+ * User: hendisantika
+ * Email: hendisantika@gmail.com
+ * Telegram : @hendisantika34
+ * Date: 12/27/23
+ * Time: 08:12
+ * To change this template use File | Settings | File Templates.
+ */
+public class DataNotFoundException extends ServiceException {
+
+    public DataNotFoundException() {
+        super();
+    }
+
+    public DataNotFoundException(String message) {
+        super(message);
+    }
+
+    public DataNotFoundException(String message, Throwable throwable) {
+        super(message, throwable);
+    }
+}

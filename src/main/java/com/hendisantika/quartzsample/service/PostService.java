@@ -128,4 +128,13 @@ public class PostService {
             throw new BadRequestException("Delete error, please check ID and try again");
         }
     }
+
+    public void deleteById(Long id) {
+        Optional<Post> post = postRepository.findById(id);
+        if (post.isPresent()) {
+            postRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Delete error, please check ID and try again");
+        }
+    }
 }

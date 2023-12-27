@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  mvc:
+    servlet:
+      path: /api
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://127.0.0.1:13306/blog?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: naruto
+    password: naruto
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      schema: classpath:quartz/quartz.sql
+      platform: mysql
+    scheduler-name: quartzScheduler
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your@gmail.com
+    password: yourpassword
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

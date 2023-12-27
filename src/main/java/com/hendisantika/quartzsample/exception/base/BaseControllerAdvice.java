@@ -2,6 +2,7 @@ package com.hendisantika.quartzsample.exception.base;
 
 import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import com.hendisantika.quartzsample.exception.DuplicateException;
+import com.hendisantika.quartzsample.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.ErrorResponse;
@@ -51,5 +52,12 @@ public class BaseControllerAdvice {
     public ErrorResponse handleBadRequestException(Exception ex) {
         return new ErrorResponse(
                 String.valueOf(HttpStatus.BAD_REQUEST.value()), ex.getMessage(), TIMESTAMP);
+    }
+
+    @ExceptionHandler({UnauthorizedException.class})
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handleUnauthorizedException(Exception ex) {
+        return new ErrorResponse(
+                String.valueOf(HttpStatus.UNAUTHORIZED.value()), ex.getMessage(), TIMESTAMP);
     }
 }

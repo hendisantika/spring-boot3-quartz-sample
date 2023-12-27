@@ -1,8 +1,11 @@
 package com.hendisantika.quartzsample.service;
 
+import com.hendisantika.quartzsample.entity.Author;
 import com.hendisantika.quartzsample.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,4 +22,9 @@ import org.springframework.stereotype.Service;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
+
+    public List<Author> getAllAuthors() {
+        List<Author> authorList = authorRepository.findAll();
+        return authorList;
+    }
 }

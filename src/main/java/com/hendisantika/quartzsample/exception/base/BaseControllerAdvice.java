@@ -1,9 +1,6 @@
 package com.hendisantika.quartzsample.exception.base;
 
-import com.hendisantika.quartzsample.exception.DataNotFoundException;
-import com.hendisantika.quartzsample.exception.DuplicateException;
-import com.hendisantika.quartzsample.exception.ForbiddenException;
-import com.hendisantika.quartzsample.exception.UnauthorizedException;
+import com.hendisantika.quartzsample.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.ErrorResponse;
@@ -67,5 +64,12 @@ public class BaseControllerAdvice {
     public ErrorResponse handleForbiddenException(Exception ex) {
         return new ErrorResponse(
                 String.valueOf(HttpStatus.FORBIDDEN.value()), ex.getMessage(), TIMESTAMP);
+    }
+
+    @ExceptionHandler({TooManyRequestsException.class})
+    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+    public ErrorResponse handleTooManyRequestsException(Exception ex) {
+        return new ErrorResponse(
+                String.valueOf(HttpStatus.TOO_MANY_REQUESTS.value()), ex.getMessage(), TIMESTAMP);
     }
 }

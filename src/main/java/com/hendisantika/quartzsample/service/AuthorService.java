@@ -1,10 +1,12 @@
 package com.hendisantika.quartzsample.service;
 
 import com.hendisantika.quartzsample.entity.Author;
+import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import com.hendisantika.quartzsample.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -26,5 +28,14 @@ public class AuthorService {
     public List<Author> getAllAuthors() {
         List<Author> authorList = authorRepository.findAll();
         return authorList;
+    }
+
+    public Author getById(Long id) {
+        return authorRepository
+                .findById(id)
+                .orElseThrow(
+                        () ->
+                                new DataNotFoundException(
+                                        MessageFormat.format("Author id {0} not found", String.valueOf(id))));
     }
 }

@@ -1,6 +1,7 @@
 package com.hendisantika.quartzsample.service;
 
 import com.hendisantika.quartzsample.entity.Author;
+import com.hendisantika.quartzsample.exception.BadRequestException;
 import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import com.hendisantika.quartzsample.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,15 @@ public class AuthorService {
             return authorRepository.save(authorUpdate);
         } else {
             return authorRepository.save(authorRequest);
+        }
+    }
+
+    public void deleteById(Long id) {
+        Optional<Author> author = authorRepository.findById(id);
+        if (author.isPresent()) {
+            authorRepository.deleteById(id);
+        } else {
+            throw new BadRequestException("Delete error, please check ID and try again");
         }
     }
 }

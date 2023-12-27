@@ -3,6 +3,7 @@ package com.hendisantika.quartzsample.service;
 import com.hendisantika.quartzsample.dto.PostDTO;
 import com.hendisantika.quartzsample.entity.Author;
 import com.hendisantika.quartzsample.entity.Post;
+import com.hendisantika.quartzsample.entity.Tag;
 import com.hendisantika.quartzsample.exception.DataNotFoundException;
 import com.hendisantika.quartzsample.repository.AuthorRepository;
 import com.hendisantika.quartzsample.repository.PostRepository;
@@ -77,5 +78,15 @@ public class PostService {
         } else {
             return postRepository.save(modelMapper.map(postRequest, Post.class));
         }
+    }
+
+    public List<Tag> getAllTagsByPostId(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new DataNotFoundException(
+                    MessageFormat.format("Post id {0} not found", String.valueOf(id)));
+        }
+
+        List<Tag> tagList = postRepository.findById(id).get().getTagList();
+        return tagList;
     }
 }
